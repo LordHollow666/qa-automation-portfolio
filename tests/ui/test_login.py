@@ -1,22 +1,16 @@
 from playwright.sync_api import Page, expect
 
-BASE_URL = "https://www.saucedemo.com"
+
+def test_login_exitoso(page: Page, login_page):
+    login_page.login("standard_user", "secret_sauce")
+    expect(page).to_have_url("https://www.saucedemo.com/inventory.html")
 
 
-def test_login_exitoso(page: Page):
-    page.goto(BASE_URL)
-    page.fill("#user-name", "standard_user")
-    page.fill("#password", "secret_sauce")
-    page.click("#login-button")
-
-    expect(page).to_have_url(f"{BASE_URL}/inventory.html")
-    expect(page.locator(".title")).to_have_text("Products")
+def test_login_usuario_bloqueado(login_page):
+    login_page.login("locked_out_user", "secret_sauce")
+    login_page.expect_error_contains("locked out")
 
 
-def test_login_usuario_bloqueado(page: Page):
-    page.goto(BASE_URL)
-    page.fill("#user-name", "locked_out_user")
-    page.fill("#password", "secret_sauce")
-    page.click("#login-button")
-
-    expect(page.locator("[data-test='error']")).to_contain_text("locked out")
+def test_login_contrasena_incorrecta(login_page):
+    login_page.login("standard_user", "clave_mala")
+    login_page.expect_error_contains("do not match")
