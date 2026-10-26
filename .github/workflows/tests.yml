@@ -25,8 +25,15 @@ jobs:
       - name: Instalar navegador de Playwright
         run: playwright install --with-deps chromium
 
-      - name: Ejecutar pruebas
-        run: pytest -v --tracing retain-on-failure --screenshot only-on-failure
+            - name: Ejecutar pruebas
+        run: pytest -v --html=reports/report.html --self-contained-html --tracing retain-on-failure --screenshot only-on-failure
+
+      - name: Guardar reporte HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-html
+          path: reports/report.html
 
       - name: Guardar evidencia si falla
         if: failure()
