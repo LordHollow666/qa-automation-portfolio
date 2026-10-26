@@ -2,7 +2,8 @@ from playwright.sync_api import expect
 
 from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
-
+import pytest
+pytestmark = pytest.mark.ui
 
 def _llegar_al_checkout(page, inventory_page):
     inventory_page.add_to_cart("sauce-labs-backpack")

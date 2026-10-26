@@ -1,5 +1,5 @@
 import pytest
-
+pytestmark = pytest.mark.ui
 
 @pytest.mark.parametrize(
     "opcion, reverso",
