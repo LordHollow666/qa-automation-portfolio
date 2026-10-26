@@ -1,6 +1,6 @@
 from playwright.sync_api import Page, expect
-
-
+import pytest
+pytestmark = pytest.mark.ui
 def test_login_exitoso(page: Page, login_page):
     login_page.login("standard_user", "secret_sauce")
     expect(page).to_have_url("https://www.saucedemo.com/inventory.html")

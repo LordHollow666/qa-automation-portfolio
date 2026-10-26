@@ -1,5 +1,6 @@
 from playwright.sync_api import expect
-
+import pytest
+pytestmark = pytest.mark.ui
 
 def test_agregar_producto_actualiza_contador(inventory_page):
     inventory_page.add_to_cart("sauce-labs-backpack")
